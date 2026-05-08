@@ -16,14 +16,6 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
 
-const limiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 60,
-});
-app.use(limiter);
-
-app.use(express.static(path.join(__dirname, "../frontend")));
-
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -39,6 +31,15 @@ app.use(
     }
   })
 );
+
+
+const limiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 60,
+});
+app.use(limiter);
+
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/tools", toolsRoutes);
