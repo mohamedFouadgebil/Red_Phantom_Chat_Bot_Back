@@ -24,6 +24,20 @@ app.use(limiter);
 
 app.use(express.static(path.join(__dirname, "../frontend")));
 
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'"],
+      imgSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+      frameAncestors: ["'none'"],
+    },
+  })
+);
+
 app.use("/api/auth", authRoutes);
 app.use("/api/tools", toolsRoutes);
 app.use("/api/chat", chatRoutes);
